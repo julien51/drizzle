@@ -1,11 +1,11 @@
 import 'babel-polyfill' // Required for async/await in redux-saga
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './rootSaga'
-import reducer from './reducer'
+import reducers from './reducer' // todo rename file
 
-function generateStore(options) {
+function generateStore(options, appReducers = {}) {
   // Redux DevTools
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,6 +17,8 @@ function generateStore(options) {
 
   // create the saga middleware
   const sagaMiddleware = createSagaMiddleware()
+
+  const reducer = combineReducers({ ...reducers, ...appReducers})
 
   const store = createStore(
     reducer,
