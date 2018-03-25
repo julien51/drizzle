@@ -40,7 +40,7 @@ class Drizzle {
       this.web3 = new Web3(window.web3.currentProvider)
 
       console.log('Injected web3 detected.')
-      this.store.dispatch({type: 'WEB3_INITIALIZED'})
+      this.store.dispatch({type: 'WEB3_INITIALIZED', web3: this.web3})
 
       return this.connect()
     } else {
@@ -53,7 +53,7 @@ class Drizzle {
           case 'ws':
             var provider = new Web3.providers.WebsocketProvider(this.options.web3.fallback.url)
             this.web3 = new Web3(provider)
-            this.store.dispatch({type: 'WEB3_INITIALIZED'})
+            this.store.dispatch({ type: 'WEB3_INITIALIZED', web3: this.web3 })
             return this.connect()
             break
           default:
@@ -110,7 +110,7 @@ class Drizzle {
   observeBlocks() {
     // Cancels our store subscription.
 
-    this.store.dispatch({type: 'DRIZZLE_INITIALIZED'})
+    this.store.dispatch({type: 'DRIZZLE_INITIALIZED', drizzle: this})
 
     var contractAddresses = []
     var contractNames = []

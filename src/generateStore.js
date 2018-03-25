@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootSaga from './rootSaga'
 import reducers from './reducer' // todo rename file
 
-function generateStore(options, appReducers = {}, defaultState = {}) {
+function generateStore(options, appReducers = {}, defaultState = {}, appMiddlewares = []) {
   // Redux DevTools
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -26,7 +26,8 @@ function generateStore(options, appReducers = {}, defaultState = {}) {
     composeEnhancers(
       applyMiddleware(
         sagaMiddleware,
-        thunkMiddleware
+        thunkMiddleware,
+        ...appMiddlewares
       )
     )
   )
